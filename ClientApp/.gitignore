@@ -7,5 +7,3 @@
 /src/.umi-test
 /dist
 .swc
-
-yarn.lock

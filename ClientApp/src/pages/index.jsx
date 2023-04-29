@@ -1,38 +1,26 @@
-import {Button} from "antd";
-import {useContext, useEffect, useState} from "react";
-import {GlobalContext} from "@/global-context";
+import {Input, Spin} from "antd";
+import {useCallback, useState} from "react";
+import {SendOutlined} from "@ant-design/icons";
+import styles from '../index.less';
 
 export default function HomePage() {
-    const { globalVariable, setGlobalVariable } = useContext(GlobalContext);
+    const [ask, setAsk] = useState('');
+    const [loading, setLoading] = useState(false);
 
-    const {ipcRenderer} = window.require("electron");
-    const test = () => {
-        console.log("Test");
-        ipcRenderer.send("app-info");
-    }
+    const onSearch = useCallback(async () => {
+        // Your code logic here
+    }, [ask]);
 
-    useEffect(() => {
-        ipcRenderer.on("got-app-path", (event, path) => {
-            const message = `This app is located at: ${path}`;
-            console.log("message", message)
-            setGlobalVariable({...globalVariable, appPath: path});
-        });
-
-        return () => {
-            ipcRenderer.removeAllListeners("got-app-path");
-        }
-    }, []);
-
-    return (
-        <div>
-            <h2>Yay! Welcome to umi!</h2>
-            <p>
-                <Button type="primary" onClick={test}>Test</Button>
-                {globalVariable.appPath}
-            </p>
-            <p>
-                To get started, edit <code>pages/index.tsx</code> and save to reload.
-            </p>
+    return <div className={styles.ask}>
+        <Spin spinning={loading}>
+            <Input.Search size="large"
+                          value={ask}
+                          onSearch={onSearch}
+                          placeholder="write your goal here"
+                          enterButton={<SendOutlined/>}
+            />
+        </Spin>
+        <div className={styles.ask}>
         </div>
-    );
+    </div>
 }
