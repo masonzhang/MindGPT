@@ -14,15 +14,20 @@ internal static class RepoFiles
     {
         bool SearchPath(string pathToFind, out string result, int maxAttempts = 10)
         {
-            var currDir = Path.GetFullPath(Assembly.GetExecutingAssembly().Location);
+            //Console.WriteLine("Assembly.GetExecutingAssembly().Location: " + Assembly.GetExecutingAssembly().CodeBase);
+            //var currDir = Path.GetFullPath(Assembly.GetExecutingAssembly().Location);
+            var currDir = Path.GetFullPath("C:\\src\\MindGPT");
+            Console.WriteLine(currDir);
             bool found;
             do
             {
                 result = Path.Join(currDir, pathToFind);
+                Console.WriteLine(result);
                 found = Directory.Exists(result);
                 currDir = Path.GetFullPath(Path.Combine(currDir, ".."));
             } while (maxAttempts-- > 0 && !found);
 
+            Console.WriteLine(found);
             return found;
         }
 
