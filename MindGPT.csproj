@@ -5,6 +5,7 @@
     <AspNetCoreModuleName>AspNetCoreModule</AspNetCoreModuleName>
     <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
     <TypeScriptToolsVersion>4.2</TypeScriptToolsVersion>
+    <RootNamespace>ElectronNET.WebApp</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Controllers\ManageWindowsController.cs" />
