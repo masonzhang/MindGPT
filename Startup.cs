@@ -1,7 +1,9 @@
-﻿using ElectronNET.API;
+﻿using System;
+using ElectronNET.API;
 using ElectronNET.API.Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -22,6 +24,10 @@ namespace ElectronNET.WebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "ClientApp/dist";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -32,13 +38,33 @@ namespace ElectronNET.WebApp
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                RequestPath = "/dist",
+            });
+            app.UseSpaStaticFiles();
+            app.MapWhen(context => !context.Request.Path.Value!.StartsWith("/api"), branch =>
+            {
+                branch.UseSpa(spaBuilder =>
+                {
+                    Console.WriteLine($"IsProduction: {env.IsProduction()}");
+                    spaBuilder.Options.SourcePath = "ClientApp";
+                    if (env.IsProduction())
+                    {
+                        spaBuilder.Options.SourcePath = "ClientApp/dist";
+                    }
+                    else
+                    {
+                        spaBuilder.UseProxyToSpaDevelopmentServer("http://localhost:3000");
+                    }
+                });
+            });
 
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute("default", "api/{controller=Home}/{action=Index}/{id?}");
             });
 
             if (HybridSupport.IsElectronActive)

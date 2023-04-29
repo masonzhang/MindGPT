@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using ElectronNET.API;
 using ElectronNET.API.Entities;
@@ -9,8 +10,10 @@ namespace ElectronNET.WebApp.Controllers
     {
         public IActionResult Index()
         {
+            Console.WriteLine($"HybridSupport.IsElectronActive: {HybridSupport.IsElectronActive}");
             if(HybridSupport.IsElectronActive)
             {
+                Console.WriteLine("Invoking Electron.IpcMain.On ...");
                 Electron.IpcMain.On("app-info", async (args) =>
                 {
                     string appPath = await Electron.App.GetAppPathAsync();

@@ -1,9 +1,9 @@
 {
-  "executable": "ElectronNET.WebApp",
+  "executable": "MindGPT",
   "splashscreen": {
     "imageFile": "/wwwroot/assets/img/about@2x.png"
   },
-  "environment": "Production",
+  "environment": "Development",
   "singleInstance": false,
   "build": {
     "appId": "com.electronnetapidemos.app",
