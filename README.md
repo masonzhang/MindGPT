@@ -11,3 +11,12 @@ Key Points to Study:
   - Information -> Knowledge -> Wisdom
 - Personality
   - Your mind is your mind
+
+# Setup
+define environments:
+```
+MIND_AZURE_ENDPOINT: Azure OpenAI Endpoint
+MIND_AZURE_OPENAI_KEY: Azure OpenAI Key
+MIND_AZURE_MODEL_COMPLETION: Azure OpenAI Deployment Name for Chat/Completion
+MIND_AZURE_MODEL_EMBEDDING: Azure OpenAI Deployment Name for Embedding
+```

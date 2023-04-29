@@ -1,12 +1,16 @@
 ﻿using System;
+using System.Linq;
 using ElectronNET.API;
 using ElectronNET.API.Entities;
+using ElectronNET.WebApp.Utilities;
+using ElectronNET.WebApp.Utils;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace ElectronNET.WebApp
 {
@@ -71,6 +75,8 @@ namespace ElectronNET.WebApp
             {
                 ElectronBootstrap();
             }
+            
+            Console.WriteLine("Skills Path: " + RepoFiles.SkillsPath());
         }
 
         public async void ElectronBootstrap()
