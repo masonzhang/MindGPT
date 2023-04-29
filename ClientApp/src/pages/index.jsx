@@ -1,9 +1,9 @@
 import {Button} from "antd";
-import {useEffect, useState} from "react";
-
+import {useContext, useEffect, useState} from "react";
+import {GlobalContext} from "@/global-context";
 
 export default function HomePage() {
-    const [appInfo, setAppInfo] = useState<string>("")
+    const { globalVariable, setGlobalVariable } = useContext(GlobalContext);
 
     const {ipcRenderer} = window.require("electron");
     const test = () => {
@@ -12,10 +12,15 @@ export default function HomePage() {
     }
 
     useEffect(() => {
-        ipcRenderer.on("got-app-path", (event: string, path: string) => {
+        ipcRenderer.on("got-app-path", (event, path) => {
             const message = `This app is located at: ${path}`;
-            setAppInfo(message);
+            console.log("message", message)
+            setGlobalVariable({...globalVariable, appPath: path});
         });
+
+        return () => {
+            ipcRenderer.removeAllListeners("got-app-path");
+        }
     }, []);
 
     return (
@@ -23,7 +28,7 @@ export default function HomePage() {
             <h2>Yay! Welcome to umi!</h2>
             <p>
                 <Button type="primary" onClick={test}>Test</Button>
-                {appInfo}
+                {globalVariable.appPath}
             </p>
             <p>
                 To get started, edit <code>pages/index.tsx</code> and save to reload.
