@@ -1,6 +1,5 @@
 {
   "private": true,
-  "author": "Hao Zhang <zhanhao@microsoft.com>",
   "scripts": {
     "dev": "umi dev",
     "build": "umi build",
