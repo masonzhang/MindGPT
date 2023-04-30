@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Linq;
 using ElectronNET.API;
 using ElectronNET.API.Entities;
-using ElectronNET.WebApp.Utilities;
+using ElectronNET.WebApp.Ask;
 using ElectronNET.WebApp.Utils;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace ElectronNET.WebApp
 {
@@ -32,6 +29,7 @@ namespace ElectronNET.WebApp
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,6 +67,7 @@ namespace ElectronNET.WebApp
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute("default", "api/{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapHub<AskHub>("/api/hub");
             });
 
             if (HybridSupport.IsElectronActive)

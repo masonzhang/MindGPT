@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.0.1",
+    "@microsoft/signalr": "^7.0.5",
     "antd": "^5.4.6",
     "mermaid": "^10.1.0",
     "react": "^18.2.0",

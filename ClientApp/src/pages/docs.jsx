@@ -6,22 +6,22 @@ import {Button} from "antd";
 const DocsPage = () => {
     const { globalVariable, setGlobalVariable } = useContext(GlobalContext);
 
-    const {ipcRenderer} = window.require("electron");
+    // const {ipcRenderer} = window.require('electron');
     const test = () => {
         console.log("Test");
-        ipcRenderer.send("app-info");
+        // ipcRenderer.send("app-info");
     }
 
     useEffect(() => {
-        ipcRenderer.on("got-app-path", (event, path) => {
-            const message = `This app is located at: ${path}`;
-            console.log("message", message)
-            setGlobalVariable({...globalVariable, appPath: path});
-        });
-
-        return () => {
-            ipcRenderer.removeAllListeners("got-app-path");
-        }
+        // ipcRenderer.on("got-app-path", (event, path) => {
+        //     const message = `This app is located at: ${path}`;
+        //     console.log("message", message)
+        //     setGlobalVariable({...globalVariable, appPath: path});
+        // });
+        //
+        // return () => {
+        //     ipcRenderer.removeAllListeners("got-app-path");
+        // }
     }, []);
 
     return (
